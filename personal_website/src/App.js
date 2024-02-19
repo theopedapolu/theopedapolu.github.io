@@ -1,68 +1,81 @@
-import React from 'react';
+import Nav from './Nav.js';
+import Profile from "./Profile.js";
+import Coursework from "./Coursework.js";
+import "./App.css"
 
 function App() {
   return (
     <div>
-    <nav className='flex justify-between items-center flex-nowrap bg-white h-[75px] font-lato border-b-2 border-gray-200'>
-        <div className='flex ml-10 text-gray-500 font-bold text-2xl'>
-          <a href='' className='hover:text-gray-800'>Theo Pedapolu</a>
+    <Nav/>
+    <Profile/>
+    <Coursework/>
+
+    <div id='Projects' className='flex flex-col items-center gap-y-10 bg-gray-100 mt-10 font-openSans py-10'>
+      <h2 className='font-system-ui text-4xl font-semibold'>Projects</h2>
+      <div className='flex flex-row justify-evenly'>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="emir.jpg"  alt="Emir" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>Colorizing the Prokudin-Gorskii Collection</div>
         </div>
-        <div className='flex space-x-10 mr-5 text-gray-500 text-xl'>
-          <a href='#About' className='border-b-4 transition duration-1 border-transparent hover:border-b-4 hover:border-amber-200'>About</a>
-          <a href='#Coursework' className='border-b-4 transition duration-1 border-transparent hover:border-b-4 hover:border-amber-200'>Coursework</a>
-          <a href='#Projects' className='border-b-4 transition duration-1 border-transparent hover:border-b-4 hover:border-amber-200'>Projects</a>
-          <a href='#Blog' className='border-b-4 transition duration-1 border-transparent hover:border-b-4 hover:border-amber-200'>Blog</a>
-          <a href='#Contact' className='border-b-4 transition duration-1 border-transparent hover:border-b-4 hover:border-amber-200'>Contact</a>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="cameraman.jpg" alt="Cameraman" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>Image Filtering & Blending</div>
         </div>
-    </nav>
-    <div className='flex justify-evenly flex-wrap'>
-      <div className='flex flex-1 flex-col bg-amber-500 font-lato text-gray-500 bg-zinc-100'>
-        <img className=''></img>
-        <h2 className='mt-20 ml-5 text-2xl font-bold'>Theo Pedapolu</h2>
-        <h2 className='ml-5'>Something</h2>
-        <a href='' className='ml-5 flex'>
-          <img src="linkedin.png" width={'25px'} height={'10px'}></img>
-          <span>Linkedin</span>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="theo_woman.jpg" alt="Theo as a woman" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>Face Morhping</div>
+        </div>
+      </div>
+      <div className='flex flex-row justify-evenly'>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="nerf.jpg" alt="Lego Truck" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>Neural Radiance Fields</div>
+        </div>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="campanile.jpg" alt="Campanile" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>Autostitching & Photo Mosaics</div>
+        </div>
+        <div className='relative w-[28%] h-[28%] text-center proj'>
+          <img src="chapel.jpg" alt="Chapel" className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+          <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-2xl uppercase'>High Dynamic Range</div>
+        </div>
+      </div>
+    </div>
+
+    <div id='Blog' className='flex flex-col mt-10'>
+      <h2 className='font-libre text-4xl self-center font-semibold'>Blog</h2>
+      <div className='flex flex-col items-start px-5 py-5 mt-5 hover:bg-slate-100'>
+        <p className='text-gray-600'>March 22, 2022</p>
+        <h3 className='text-amber-600 font-roboto text-2xl underline hover:text-black'>Lorem ipsum dolor sit amet</h3>
+        <p className='font-libre'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at dolor mollis libero tempor faucibus. Sed eros orci, varius non elementum ut, euismod sit amet neque. Etiam diam mauris, tempor sit amet nibh sed, sagittis fringilla dolor. Cras luctus massa eu odio feugiat, sit amet egestas turpis dictum. Aliquam faucibus felis eget dignissim ullamcorper. Suspendisse potenti. Aenean a purus id nisi laoreet finibus. Donec eu ante ut quam euismod cursus</p>
+      </div>
+      <div className='flex flex-col items-start px-5 py-5 hover:bg-slate-100'>
+        <p className='text-gray-600'>March 22, 2022</p>
+        <h3 className='text-amber-600 font-roboto text-2xl underline hover:text-black'>Lorem ipsum dolor sit amet</h3>
+        <p className='font-libre'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at dolor mollis libero tempor faucibus. Sed eros orci, varius non elementum ut, euismod sit amet neque. Etiam diam mauris, tempor sit amet nibh sed, sagittis fringilla dolor. Cras luctus massa eu odio feugiat, sit amet egestas turpis dictum. Aliquam faucibus felis eget dignissim ullamcorper. Suspendisse potenti. Aenean a purus id nisi laoreet finibus. Donec eu ante ut quam euismod cursus</p>
+      </div>
+    </div>
+
+    <div className='flex flex-col bg-gray-100 h-[120px] mt-20'>
+      <div className='flex items-center ml-5 mt-7 font-openSans'>
+        <a href="mailto:theopedapolu@gmail.com">
+          <i className=" fa fa-envelope text-[#FFA500]" aria-hidden='True'></i>
+          <span className='ml-2 font-semibold'>theopedapolu@gmail.com</span>
         </a>
-        <a href='' className='ml-5'>
-          <img></img>
-          <span>Github</span>
+        <a href="https://www.twitter.com/TPedapolu">
+          <i className="fa-brands fa-twitter ml-7 text-[#1DA1F2]" aria-hidden='True'></i>
+          <span className='ml-2 font-semibold'>Twitter</span>
         </a>
       </div>
-      <div className='flex flex-1 flex-col items-left font-system-ui'>
-        <h2 className='mt-20 font-lato font-bold text-2xl text-gray-500 underline decoration-zinc-300'>About</h2>
-        <p className='text-m'>I am a new grad from UC Berkeley,  having received my Bachelor's in Computer Science & Applied Math. </p>
+      <div className='flex items-center space-x-1 ml-5'>
+        
       </div>
-
+      <p className='ml-5 mt-5 font-openSans'><i className='fas fa-copyright' aria-hidden='True'></i> 2023 Theophilus Pedapolu, Created with React.js & Tailwind CSS</p>
     </div>
 
-    <div className='flex flex-col items-center'>
-      <h2>Coursework</h2>
-      <p>Lorem ipsum dolor sit amet</p>
     </div>
-
-    <div className='flex'>
-      <div>
-        <h2>Projects</h2>
-      </div>
-
-      <div>
-
-      </div>
-    </div>
-
-    <div className='flex' id='Contact'>
-      <h2>Contact</h2>
-    </div>
-
-    <div className='flex flex-col'>
-      <p>&#9400; 2023 Theophilus Pedapolu</p>
-      <p>Created with React.js & Tailwind CSS</p>
-    </div>
-    </div>
-
-    
   );
+
 }
 
 export default App;

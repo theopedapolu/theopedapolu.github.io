@@ -5,7 +5,7 @@ function Profile() {
       <div id='About' className='flex justify-evenly flex-wrap'>
       <div className='flex flex-1 flex-col items-center align-center font-lato text-gray-500 h-[330px] bg-gray-50'>
           <a href="." className=''>
-            <img src="profile.jpg" alt="Profile" className='rounded-[50%] w-[120px] h-[120px] mt-10 self-center'></img>
+            <img src="images/profile.jpg" alt="Profile" className='rounded-[50%] w-[120px] h-[120px] mt-10 self-center'></img>
           </a>
         <h2 className='text-2xl font-bold mt-5'>Theo Pedapolu</h2>
         <h2 className='font-medium'>Computer Science & Math</h2>

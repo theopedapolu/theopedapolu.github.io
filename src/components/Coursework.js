@@ -3,7 +3,7 @@ import React from 'react';
 function Coursework() {
     return (
     <div id='Coursework' className='flex flex-col items-center py-7'>
-      <h2 className='font-system-ui text-4xl font-semibold'>Selected Coursework</h2>
+      <h2 className='font-libre text-4xl font-semibold'>Selected Coursework</h2>
       <table className='border [&>*:nth-child(even)]:bg-[#f2f2f2] mt-5 text-md'>
         <tr className='border text-lg bg-black text-white'>
           <th>Core</th>

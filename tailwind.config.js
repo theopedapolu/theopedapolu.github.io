@@ -17,6 +17,7 @@ module.exports = {
       'roboto': ['Roboto', 'sans-serif'],
       'libre': ['Libre Baskerville', 'serif'],
        'openSans': ['Open Sans', 'sans-serif'],
+       'calibri': ['Calibri', 'serif'],
     }
   },
   plugins: [],

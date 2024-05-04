@@ -3,7 +3,7 @@ import React from 'react';
 function Footer() {
     return (
     <div className='flex flex-col bg-gray-100 h-[120px] mt-20'>
-      <div className='flex items-center ml-5 mt-7 font-openSans'>
+      <div className='flex items-center ml-5 mt-7 font-poppins'>
         <a href="mailto:theopedapolu@gmail.com">
           <i className=" fa fa-envelope text-[#FFA500]" aria-hidden='True'></i>
           <span className='ml-2 font-semibold'>theopedapolu@gmail.com</span>
@@ -16,7 +16,7 @@ function Footer() {
       <div className='flex items-center space-x-1 ml-5'>
         
       </div>
-      <p className='ml-5 mt-5 font-openSans'><i className='fas fa-copyright' aria-hidden='True'></i> 2023 Theophilus Pedapolu, Created with React.js & Tailwind CSS</p>
+      <p className='ml-5 mt-5 font-openSans'><i className='fas fa-copyright' aria-hidden='True'></i> 2024 Theophilus Pedapolu, Created with React.js & Tailwind CSS</p>
     </div>
     )
 }

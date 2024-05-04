@@ -18,6 +18,8 @@ module.exports = {
       'libre': ['Libre Baskerville', 'serif'],
        'openSans': ['Open Sans', 'sans-serif'],
        'calibri': ['Calibri', 'serif'],
+       'poppins': ['Poppins'],
+       'lora':['Lora'],
     }
   },
   plugins: [],

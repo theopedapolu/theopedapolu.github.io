@@ -2,7 +2,7 @@ import React from 'react';
 
 function Coursework() {
     return (
-    <div id='Coursework' className='flex flex-col items-center py-10'>
+    <div id='Coursework' className='flex flex-col items-center py-10 w-full left-0 right-0'>
       <h2 className='font-openSans text-4xl font-semibold'>Selected Coursework</h2>
       <table className='border [&>*:nth-child(even)]:bg-[#f2f2f2] mt-5 text-md font-openSans'>
         <tbody>

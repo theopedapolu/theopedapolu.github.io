@@ -2,7 +2,7 @@ import React from 'react';
 
 function Blog() {
     return (
-    <div id='Blog' className='flex flex-col mt-7'>
+    <div id='Blog' className='flex flex-col mt-7 w-full items-center left-0 right-0'>
       <h2 className='font-openSans text-4xl self-center font-semibold'>Blog</h2>
       <div className='flex flex-col items-start p-3 mt-4 hover:bg-slate-100'>
         <p className='text-gray-500 font-poppins'>March 22, 2022</p>

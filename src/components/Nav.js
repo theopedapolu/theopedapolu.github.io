@@ -2,7 +2,7 @@ import React from 'react';
 
 function Nav() {
     return (
-        <nav className='flex justify-between items-center flex-nowrap bg-white h-[75px] border-b-2 border-gray-200 font-openSans font-semibold'>
+        <nav className='flex justify-between items-center flex-nowrap bg-white h-[60px] w-full z-10 border-b-2 border-gray-200 font-openSans top-0 left-0 right-0 font-semibold fixed'>
             <div className='flex ml-10 text-gray-500 font-bold text-2xl'>
             <a href='.' className='hover:text-gray-800'>Theo Pedapolu</a>
             </div>

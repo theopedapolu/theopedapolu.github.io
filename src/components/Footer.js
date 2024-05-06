@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
     return (
-    <div className='flex flex-col bg-gray-100 h-[120px] mt-20'>
+    <div className='flex flex-col bg-gray-100 h-[120px] mt-20 w-full'>
       <div className='flex items-center ml-5 mt-7 font-poppins'>
         <a href="mailto:theopedapolu@gmail.com">
           <i className=" fa fa-envelope text-[#FFA500]" aria-hidden='True'></i>

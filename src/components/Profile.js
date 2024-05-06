@@ -2,7 +2,7 @@ import React from 'react';
 
 function Profile() {
     return (
-      <div id='About' className='flex justify-evenly flex-wrap bg-gray-100 pb-5'>
+      <div id='About' className='flex justify-evenly flex-wrap bg-gray-100 pb-5 w-full mt-10 left-0 '>
       <div className='flex flex-1 flex-col items-center justify-center'>
           <a href="/">
             <img src="images/profile.jpg" alt="Profile" className='rounded-[50%] w-[120px] h-[120px] mt-10'></img>

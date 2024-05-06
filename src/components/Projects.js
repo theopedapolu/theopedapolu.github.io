@@ -1,11 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+// blur-sm brightness-50
 function ProjImg({name,txt,link}) {
   return (
   <div className='relative w-[28%] h-[28%] text-center proj'>
       <Link to={link}>
-        <img src={name}  alt={txt} className='max-w-[100%] max-h-[100%] blur-sm brightness-50'></img>
+        <img src={name}  alt={txt} className='w-[100%] h-[100%] blur-[2px] brightness-50'></img>
         <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white font-semibold text-xl uppercase'>{txt}</div>
       </Link>
   </div>
@@ -14,7 +15,7 @@ function ProjImg({name,txt,link}) {
 
 function Projects() {
     return (
-    <div id='Projects' className='flex flex-col items-center gap-y-10 bg-gray-100 pt-5 mt-5 pb-10 font-poppins'>
+    <div id='Projects' className='flex flex-col items-center gap-y-10 bg-gray-100 pt-5 mt-5 pb-10 font-poppins w-full left-0 right-0'>
       <h2 className='text-4xl font-semibold font-openSans'>Projects</h2>
       <div className='flex flex-row justify-evenly'>
         <ProjImg name={"images/emir.jpg"} txt={"Colorizing the Prokudin-Gorskii Collection"} link={'/prokudin_gorskii'}/>

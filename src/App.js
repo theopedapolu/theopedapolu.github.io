@@ -12,6 +12,7 @@ import ImageBlending from "./components/ImageBlending.js";
 import FaceMorphing from "./components/FaceMorphing.js";
 import Autostitching from "./components/Autostitching.js";
 import NERF from "./components/NERF.js";
+import Catch_22 from "./components/blogs/catch_22_review.js";
 
 function Home() {
   return (
@@ -38,6 +39,7 @@ function App() {
       <Route path='/nerf' element={<NERF/>}/>
       <Route path='/autostitching' element={<Autostitching/>}/>
       <Route path='/hdr' element={<ImageBlending/>}/>
+      <Route path='/catch_22_review' element={<Catch_22/>}/>
     </Routes>
     </BrowserRouter>
   );

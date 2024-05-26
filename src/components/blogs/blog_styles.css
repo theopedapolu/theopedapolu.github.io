@@ -1,0 +1,19 @@
+.content {
+    @apply mx-[300px];
+}
+
+.header{
+    @apply py-5;
+}
+
+h2 {
+    @apply text-3xl font-roboto;
+}
+
+h3,h4 {
+    @apply py-2 font-roboto;
+}
+
+p {
+    @apply font-lora text-zinc-950;
+}

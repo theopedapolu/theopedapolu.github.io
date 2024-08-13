@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NeRFs (Neural Radiance Fields)">
+  <meta property="og:description" content="This project has no image or showcase page, but it is still a beautiful project inside out!">
+  <meta property="og:image" content="https://i.imgur.com/uyDNQnn.jpg">
+
+  <title>NeRFs (Neural Radiance Fields)</title>
+  <meta name="description" content="This project has no image or showcase page, but it is still a beautiful project inside out!">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Theo Pedapolu</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1 id="neural-radiance-fields">Neural Radiance Fields</h1>
+
+<h2 id="theophilus-pedapolu">Theophilus Pedapolu</h2>
+
+<h2 id="background">Background</h2>
+
+<p>In this project, we explore how a neural radiance field (NeRF) can be used to represent 3D space. A NeRF is a function F: {x,y,z,θ,φ}→{r,g,b,σ} that takes in world coordinates <em>x,y,z</em> and a viewing direction θ,φ and returns a color value <em>r,g,b</em> and density <em>σ</em> that is used to create a 2D projection of the world from that perspective. This function is found by training a neural network. In part 1, we consider a simple case of a NeRF for a 2D image and, in part 2, we train a deeper neural network to represent a 3D space.</p>
+
+<h2 id="part-1-fitting-a-neural-radiance-field-to-a-2d-image">Part 1: Fitting a Neural Radiance Field to a 2D Image</h2>
+
+<p>To understand radiance fields, we consider a simple NeRF <em>F: {u,v} → {r,g,b}</em> that maps 2D pixel coordinates to a color value. We train a shallow neural network to learn this function on an image and optimize it to reconstruct the image. We use the MLP architecture shown below, with a sigmoid activation at the end to ensure the RGB values lie in the normalized range (0,1). Furthermore, to enable local pixels to have sufficient variability in their RGB values, we use positional encoding. A series of sinusoidal functions is applied to the 2D input coordinates to expand its dimensionality to 42. We also normalized the pixels values and pixel coordinates before training the network. In training the network, for each iteration, we sample a batch of 10,000 random pixels from the image, using the pixel coordinates as the input and known RGB values for each pixel as the target. Our loss function is the peak signal-to-noise ratio (PSNR).</p>
+
+<p><img src="images/nerfs/part1_MLP.jpg" alt="MLP Architecture for Simple NeRF" /></p>
+
+<p>The training PSNR and predicted images across intermediate iterations are shown below. The hyperparameters used were: batch_size = 10000, learning_rate = 1e-2, L = 10, number_of_layers = 4, channel_size = 256. Overall, the model reconstructs the image pretty well but it is still a little blurry compared to the original image. Perhaps more iterations are needed to allow the model to learn higher dimensional features.</p>
+
+<p><img src="images/nerfs/fox_psnr.jpg" alt="PSNR Graph" />
+<img src="images/nerfs/fox_ims.jpg" alt="Predicted Fox Images during Training" /></p>
+
+<p>We also changed the channel size hyperparameter from 256 to 420 to see how the performance is affected. This caused the model to perform worse and get a lower PSNR, perhaps because more iterations are needed to correctly update all the weights. The final fox image looks okay but is blurrier than the predicted image with the original hyperparameters.</p>
+
+<p><img src="images/nerfs/fox2_psnr.jpg" alt="PSNR Graph" />
+<img src="images/nerfs/fox2_ims.jpg" alt="Predicted Fox Images during Training" /></p>
+
+<p>Additionally, we changed the hyperparameter for the length of the positional encoding, L from 10 to 3. This caused the performance to be significantly worse, as seen in the predicted images across iterations. The model is much slower in converging to a high PSNR so the final result after 2000 iterations is much blurrier. This is probably because, with a lower dimensional positional encoding, it takes longer for the model to discriminate colors for pixels that are spatially close.</p>
+
+<p><img src="images/nerfs/fox3_psnr.jpg" alt="PSNR Graph" />
+<img src="images/nerfs/fox3_ims.jpg" alt="Predicted Fox Images during Training" /></p>
+
+<p>Finally, we optimized this model to reconstruct an image of El Capitan in Yosemite National Park. The hyperparameters used were: batch_size = 30000, channel_size = 300, L = 15, number_of_layer = 4, learning_rate = 1e-2. Overall, the model fit the image well and reconstructs most of it with a good PSNR.</p>
+
+<p><img src="images/nerfs/capitan_psnr.jpg" alt="PSNR Graph" />
+<img src="images/nerfs/capitan_ims.jpg" alt="Predicted El Capitan Images during Training" /></p>
+
+<h2 id="part-2-fitting-a-neural-radiance-field-to-multi-view-images">Part 2: Fitting a Neural Radiance Field to Multi-View Images</h2>
+
+<p>Now that we understand the basics of NeRFs, we train a deeper NeRF to represent the 3D space of a lego truck. There are a number of preprocessing and postprocessing steps we implement to train this more complex model.</p>
+
+<h3 id="create-rays-from-cameras">Create Rays from Cameras</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>First, we write functions to convert between pixel, camera, and world coordinates and create rays from a pixel. To convert from camera to world coordinates, we create a function that takes in a camera-to-world (c2w) matrix and a coordinates tensor of shape (batch_size, 3). A column of ones is appended to the coordinates tensor (to allow affine transformations) then it is transposed and multiplied with the c2w matrix to generate the world coordinates. To convert from pixel to camera coordinates, a similar process is employed, except we multiply by the inverse of the intrinsic matrix <strong>K</strong> and a depth s to get 3D coordinates in the camera system. Finally, we write a function to create rays from 2D pixel coordinates. The origin of the rays is found by converting the camera coordinates [0,0,0] to world coordinates (i.e. we multiply the c2w matrix by the vector [0,0,0,1]). And the ray direction for each pixel <em>(u,v)</em> is found by first converting the pixel to camera coordinates, then world coordinates to get <strong>Xw</strong> = <em>(xw yw zw)</em>. We then use the formula <strong>rd</strong> = (Xw - r0) /</td>
+      <td> </td>
+      <td>Xw - r0</td>
+      <td> </td>
+      <td>2 where r0 is the ray origin to get the normalized ray direction. All of these functions support batched coordinates by taking in a tensor of shape (batch_size,3), i.e. the coordinates are laid out in rows.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="sampling">Sampling</h3>
+
+<p>Next we implement random sampling to get rays from different perspectives. First, we write a function <code class="language-plaintext highlighter-rouge">sample_rays</code> which uses a set of images and corresponding c2w matrices and returns a sampling of N ray origins, ray directions, and RGB values from the pixels across all images. We do this by sampling M random images, then sampling N//M random rays from each image, keeping track of what the actual RGB values for each ray are for training purposes. We found that the values N = 10000, M = 50 worked pretty well in producing a low PSNR. We also wrote a function <code class="language-plaintext highlighter-rouge">sample_along_rays</code> which takes in a set of ray origins and ray directions and discretizes each ray by sampling evenly at points along the ray. Namely, we sample 64 points evenly from 2.0 to 6.0 (i.e. <code class="language-plaintext highlighter-rouge">t = np.linspace(2.0,6.0,64)</code>) along the ray to get the 3D coordinates <code class="language-plaintext highlighter-rouge">X = Ro + Rd * t</code> for each ray. Finally, during training only, we add some small perturbation (in the range [0,0.1]) to the points <code class="language-plaintext highlighter-rouge">t</code> along which we sample to ensure every location along the ray is touched upon in training. In the end, we go from Ro and Rd tensors of shape <code class="language-plaintext highlighter-rouge">(batch_size,3)</code> to a points tensor of shape <code class="language-plaintext highlighter-rouge">(batch_size,64,3)</code>.</p>
+
+<h3 id="dataloader">Dataloader</h3>
+
+<p>We use all the functions we made in the previous 2 parts to implement a custom dataset that takes in a set of images, corresponding c2w matrices, an intrinsic matrix <strong>K</strong>, a parameter M for how many images to sample in <code class="language-plaintext highlighter-rouge">sample_rays</code>, and a flag <code class="language-plaintext highlighter-rouge">perturb</code> to indicate whether perturbation should be added. The dataset returns a tensor of shape <code class="language-plaintext highlighter-rouge">(10000, 64, 3)</code> for each iteration, i.e. 10,000 rays and 64 sample points along each ray as well as a rays direction tensor <strong>Rd</strong> and a pixels tensor, both of shape <code class="language-plaintext highlighter-rouge">(10000,3)</code> for feeding through the model. A visualization of how this sampling looks like for the set of multi-view lego truck images is shown below.</p>
+
+<p><img src="images/nerfs/viser.jpg" alt="Visualization" /></p>
+
+<h3 id="nerf-architecture">NeRF Architecture</h3>
+
+<p>Now that all the preprocessing steps have been implemented, we create a neural network architecture that learns a mapping from 3D world coordinates and viewing direction to RGB values and density. We use the architecture shown below, which takes in two tensors, one containing world coordinates and the other ray directions (or viewing directions). These inputs are fed through many MLP layers to get tensors of densities and RGB values [both of shape <code class="language-plaintext highlighter-rouge">(batch_size,64,3)</code>] at the end. Since we are representing a 3D space, which is much more complex than a 2D space, we need a deeper network to learn the function. Moreover, the skip connections serve to alleviate the vanishing gradient problem so the network doesn’t “forget” about the earlier layers and inputs. For positional encoding, we used L=10 for the <strong>x</strong> tensor of world coordinates and L=4 for the <strong>rd</strong> tensor of ray directions.</p>
+
+<p><img src="images/nerfs/part2_mlp.jpg" alt="NeRF Architecture for 3D Space" /></p>
+
+<h3 id="volume-rendering">Volume Rendering</h3>
+
+<p>After getting the output tensors from the model, we need to translate the density and RGB information for each sample to a single RGB value for each ray. We do this via the volume rendering equation shown below, which sums up the RGB values for each sample along the ray according to their corresponding density to get a single RBG value for the ray at the end. We vectorize this equation using <code class="language-plaintext highlighter-rouge">torch.cumsum</code> and other <code class="language-plaintext highlighter-rouge">torch</code> operations to do all the summation in parallel.</p>
+
+\[C = \sum_i exp(-\sum_{j=1}^{i-1}\sigma_j) * (1-exp(-\sigma_i)) * c_i\]
+
+<h3 id="training">Training</h3>
+
+<p>We use the following hyperparameters for training: batch_size = 10000, n_iterations = 2000, L = 10, n_layers = 8, channel_size = 256. We apply the Adam optimizer with learning_rate = 5e-4 and decay = 0.1 over 2000 steps. The plot below shows the training PSNR across iterations, with the lego truck PSNR increasing and stabilizing around iteration 1800.</p>
+
+<p><img src="images/nerfs/psnr.jpg" alt="PSNR Graph" /></p>
+
+<h3 id="predictions">Predictions</h3>
+
+<p>Finally, we generate multi-view images of the lego truck by feeding the model ray samples from unseen perspectives of the lego truck, and using the model to generate RBG values. Overall, the model does a great job generating unseen views of the lego truck and was able to create clear images without seeing the actual truck at that perspective. The resulting images are shown below.</p>
+
+<p><img src="images/nerfs/lego_ims.jpg" alt="Predicted Lego Truck Images during Training" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Neural Radiance Fields are an incredible approach to represent 3D spaces and render multi-view images using neural networks. Though the model is computationally expensive and requires a large amount of data, its ability to generalize to unseen perspectives makes it a great approach for computer vision tasks.</p>
+
+<h3 id="references">References</h3>
+
+<ol>
+  <li><strong>Mildenhall, B., et al. (2020).</strong> NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis. In <em>Proceedings of the European Conference on Computer Vision (ECCV)</em>. 2020.</li>
+  <li><strong>Tancik, M., et al. (2020).</strong> Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains. <em>Advances in Neural Information Processing Systems (NeurIPS)</em>.</li>
+</ol>
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Theo Pedapolu</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:theopedapolu@gmail.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/theopedapolu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/theopedapolu/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.twitter.com/TPedapolu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#1da1f2'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-twitter fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

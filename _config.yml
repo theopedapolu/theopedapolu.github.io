@@ -1,5 +1,5 @@
 ### Site Settings ###
-title               : Theo Pedapolu
+title               : Theophilus Pedapolu
 description         : >-
                       Beware the infinite loop of procrastination. TODO: Write a clever welcome message
 baseurl             : ""                                # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
@@ -18,12 +18,11 @@ nav_exclude:                                            # The following paths ar
   - pages/tags.html
   - pages/404.html
   - pages/index.md
-  - documentation/partials/**                           # For Documentation Only
 
 
 ### Author Info ###
 author:
-  name              : Theo Pedapolu
+  name              : Theophilus Pedapolu
   image             : https://i.imgur.com/uyDNQnn.jpg
 # behance           : your_username
 # dribbble          : your_username

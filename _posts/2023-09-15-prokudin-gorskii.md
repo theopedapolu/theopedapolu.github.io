@@ -2,7 +2,7 @@
 title: Colorizing the Prokudin-Gorski Image Collection
 tags: [Computation, Photography]
 style: fill
-color: secondary
+color: dark
 description: hi
 ---
 # Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection

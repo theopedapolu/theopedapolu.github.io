@@ -7,8 +7,8 @@ weight: 3
 
 # **About Me**
 
-Hi I am **{{ site.author.name }}** :wave:,<br>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Hi, my name is Theophilus Pedapolu :wave:<br>
+I am a new grad from UC Berkeley, graduated with a bachelor's in computer science and applied math in December 2023. I am interested in deep learning, full stack software development, computer vision, and computer security. I also dabble in some math on the side, namely number theory and analysis, which I studied in my undergrad and find interesting to learn. In my free time, I like to play chess online (rated ~2000), read mystery novels, and jam on my guitar or piano. Hit up me for a game on [Chess.com](https://www.chess.com/member/starshopper22) if you ever want to play.
 
 <div class="row">
 {% include about/skills.html title="Programming Skills" source=site.data.programming-skills %}

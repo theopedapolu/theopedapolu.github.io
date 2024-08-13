@@ -1,8 +1,8 @@
 ---
-name: The Movies Project
-tools: [C#, XML, WPF]
+name: PintOS
+tools: [C/C++, x86 assembly, GDB]
 image: https://www.sketchappsources.com/resources/source-image/movie-badges-jurajjurik.png
-description: This project has an individual showcase page, not just a direct link to the project site or repo. Now you have more space to describe your awesome project!
+description: A simple operating system for the x86 architecture, written in x86 assembly and C, that supports running user processes, multithreading, context switching, scheduling, and a Unix FFS-like file system.
 ---
 
 # The Movies Project

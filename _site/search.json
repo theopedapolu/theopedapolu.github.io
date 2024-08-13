@@ -9,19 +9,19 @@
     } ,
   
     {
+      "title"    : "Experimenting with image filters and blending techniques",
+      "category" : "",
+      "tags"     : "Photography, Image Processing",
+      "url"      : "/blog/image-filtering",
+      "date"     : "2023-10-28 00:00:00 -0400"
+    } ,
+  
+    {
       "title"    : "Colorizing the Prokudin-Gorski Image Collection",
       "category" : "",
       "tags"     : "Computation, Photography",
       "url"      : "/blog/prokudin-gorskii",
       "date"     : "2023-09-15 00:00:00 -0400"
-    } ,
-  
-    {
-      "title"    : "Clean Coding",
-      "category" : "",
-      "tags"     : "Software Development, Clean Code",
-      "url"      : "/blog/clean-coding",
-      "date"     : "2018-12-10 00:00:00 -0500"
     } 
   
 ]

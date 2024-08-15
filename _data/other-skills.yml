@@ -1,7 +1,7 @@
-- name: Adobe Photoshop
-  percentage: 95
+- name: Piano (Church Band)
+  percentage: 88
   color: info
 
-- name: Adobe Illustrator
-  percentage: 90
+- name: Guitar (working on it)
+  percentage: 45
   color: success

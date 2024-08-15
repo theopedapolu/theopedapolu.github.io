@@ -82,23 +82,27 @@
 
 <p>To understand radiance fields, we consider a simple NeRF <em>F: {u,v} → {r,g,b}</em> that maps 2D pixel coordinates to a color value. We train a shallow neural network to learn this function on an image and optimize it to reconstruct the image. We use the MLP architecture shown below, with a sigmoid activation at the end to ensure the RGB values lie in the normalized range (0,1). Furthermore, to enable local pixels to have sufficient variability in their RGB values, we use positional encoding. A series of sinusoidal functions is applied to the 2D input coordinates to expand its dimensionality to 42. We also normalized the pixels values and pixel coordinates before training the network. In training the network, for each iteration, we sample a batch of 10,000 random pixels from the image, using the pixel coordinates as the input and known RGB values for each pixel as the target. Our loss function is the peak signal-to-noise ratio (PSNR).</p>
 
-<p>[Image placeholder removed]</p>
+<p><img src="https://i.postimg.cc/BZd26W5p/part1-MLP.jpg" alt="NeRFs" /></p>
 
 <p>The training PSNR and predicted images across intermediate iterations are shown below. The hyperparameters used were: batch_size = 10000, learning_rate = 1e-2, L = 10, number_of_layers = 4, channel_size = 256. Overall, the model reconstructs the image pretty well but it is still a little blurry compared to the original image. Perhaps more iterations are needed to allow the model to learn higher dimensional features</p>
 
-<p>[Image placeholders removed]</p>
+<p><img src="https://i.postimg.cc/K8h4Xx7X/fox-psnr.jpg" alt="NeRFs" />
+<img src="https://i.postimg.cc/zGwv86py/fox-ims.jpg" alt="NeRFs" /></p>
 
 <p>We also changed the channel size hyperparameter from 256 to 420 to see how the performance is affected. This caused the model to perform worse and get a lower PSNR, perhaps because more iterations are needed to correctly update all the weights. The final fox image looks okay but is blurrier than the predicted image with the original hyperparameters</p>
 
-<p>[Image placeholders removed]</p>
+<p><img src="https://i.postimg.cc/7LmLTzFD/fox2-psnr.jpg" alt="NeRFs" />
+<img src="https://i.postimg.cc/4dyxvdGc/fox2-ims.jpg" alt="NeRFs" /></p>
 
 <p>Additionally, we changed the hyperparameter for the length of the positional encoding, L from 10 to 3. This caused the performance to be signifcantly worse, as seen in the predicted images across iterations. The model is much slower in converging to a high PSNR so the final result after 2000 iterations is much blurrier. This is probably because, with a lower dimsional positional encoding, it takes longer for the model to discrimiate colors for pixels that are spatially close</p>
 
-<p>[Image placeholders removed]</p>
+<p><img src="https://i.postimg.cc/C5fMtQzL/fox3-psnr.jpg" alt="NeRFs" />
+<img src="https://i.postimg.cc/zBQXxrDc/fox3-ims.jpg" alt="NeRFs" /></p>
 
 <p>Finally, we optimized this model to reconstruct an image of El Capitan in Yosemite National Park. The hyperparameters used were: batch_size = 30000, channel_size = 300, L = 15, number_of_layer = 4, learning_rate = 1e-2. Overall, the model fit the image well and reconstructs most of it with a good PSNR.</p>
 
-<p>[Image placeholders removed]</p>
+<p><img src="https://i.postimg.cc/25z66GX2/capitan-im.jpg" alt="NeRFs" />
+<img src="https://i.postimg.cc/15q4Yfqc/capitan-psnr.jpg" alt="NeRFs" /></p>
 
 <h2 id="pat-2-fitting-a-neural-radiance-field-to-multi-view-images">Pat 2: Fitting a Neural Radiance Field to Multi-View Images</h2>
 
@@ -106,17 +110,7 @@
 
 <h3 id="create-rays-from-cameras">Create Rays from Cameras</h3>
 
-<table>
-  <tbody>
-    <tr>
-      <td>First, we write functions to convert between pixel, camera, and world coordinates and create rays from a pixel. To convert from camera to world coordinates, we create a function that takes in a camera-to-world (c2w) matrix and a coordinates tensor of shape (batch_size, 3). A column of ones is appended to the coordinates tensor (to allow affine transformations) then it is tranposed and multiplied with the c2w matrix to generate the world coordinates. To convert from pixel to camera coordinates, a similar process is employed, except we multiply by the inverse of the intrinsic matrix <strong>K</strong> and a depth s to get 3D coordinates in the camera system. Finally, we write a function to create rays from 2D pixel coordinates. The origin of the rays is found by converting the camera coordinates [0,0,0] to world coordinates (i.e. we multiply the c2w matrix by the vector [0,0,0,1]). And the ray direction for each pixel <em>(u,v)</em> is found by first converting the pixel to camera coordinates, then world coordinates to get <strong>X~w~</strong> = <em>(x~w~ y~w~ z~w~)</em>. We then use the formula <strong>r~d~</strong> = (X~w~-r~0~) /</td>
-      <td> </td>
-      <td>X~w~-r~0~</td>
-      <td> </td>
-      <td>~2~ where r~0~ is the ray origin to get the normalized ray direction. All of these functions support batched coordinates by taking in a tensor of shape (batch_size,3), i.e. the coordinates are laid out in rows</td>
-    </tr>
-  </tbody>
-</table>
+<p>First, we write functions to convert between pixel, camera, and world coordinates and create rays from a pixel. To convert from camera to world coordinates, we create a function that takes in a camera-to-world (c2w) matrix and a coordinates tensor of shape (batch_size, 3). A column of ones is appended to the coordinates tensor (to allow affine transformations) then it is tranposed and multiplied with the c2w matrix to generate the world coordinates. To convert from pixel to camera coordinates, a similar process is employed, except we multiply by the inverse of the intrinsic matrix <strong>K</strong> and a depth s to get 3D coordinates in the camera system. Finally, we write a function to create rays from 2D pixel coordinates. The origin of the rays is found by converting the camera coordinates [0,0,0] to world coordinates (i.e. we multiply the c2w matrix by the vector [0,0,0,1]). And the ray direction for each pixel <em>(u,v)</em> is found by first converting the pixel to camera coordinates, then world coordinates to get <strong>X~w~</strong> = <em>(x~w~ y~w~ z~w~)</em>. We then use the formula <strong>r~d~</strong> = (X~w~-r~0~) / X~w~-r~0~~2~ where r~0~ is the ray origin to get the normalized ray direction. All of these functions support batched coordinates by taking in a tensor of shape (batch_size,3), i.e. the coordinates are laid out in rows.</p>
 
 <h3 id="sampling">Sampling</h3>
 
@@ -126,27 +120,30 @@
 
 <p>We use all the functions we made in the previous 2 parts to implement a custom dataset that takes in a set of images, corresponding c2w matrices, an intrinsic matrix <strong>K</strong>, a parameter M for how many images to sample in <code class="language-plaintext highlighter-rouge">sample_rays</code>, and a flag <code class="language-plaintext highlighter-rouge">perturb</code> to indicate wheter perturbation should be added. The dataset returns a tensor of shape <code class="language-plaintext highlighter-rouge">(10000, 64, 3)</code> for each iteration, i.e. 10,000 rays and 64 sample points along each ray as well as a rays direction tensor <strong>R~d~</strong> and a pixels tensor, both of shape <code class="language-plaintext highlighter-rouge">(10000,3)</code> for feeding through the model. A visualization of how this sampling looks like for the set of multi-view lego truck images is shown below.</p>
 
-<p>[Image placeholder removed]</p>
+<p><img src="https://i.postimg.cc/t4z62YKv/viser.jpg" alt="NeRFs" /></p>
 
 <h3 id="nerf-architecture">NeRF Architecture</h3>
 
 <p>Now that all the preprocessing steps have been implemented, we create a neural network architecture that learns a mapping from 3D world coordinates and viewing direction to RGB values and density. We use the architecture shown below, which takes in two tensors, one containing world coordinates and the other ray directions (or viewing directions). These inputs are fed through many MLP layers to get a tensors of densities and RBG values [both of shape <code class="language-plaintext highlighter-rouge">(batch_size,64,3)</code>] at the end. Since we are representing a 3D space, which is much more complex than a 2D space, we need a deeper network to learn the function. Moreover, the skip connections serve to alleviate the vanishing gradient problem so the network doesn’t “forget” about the earlier layers and inputs. For positional encoding, we used L=10 for the <strong>x</strong> tensor of world coordinates and L=4 for the <strong>r~d~</strong> tensor of ray directions.</p>
 
-<p>[Image placeholder removed]</p>
+<p><img src="https://i.postimg.cc/7Z473gWT/part2-mlp.jpg" alt="NeRFs" /></p>
 
 <h3 id="volume-rendering">Volume Rendering</h3>
 
 <p>After getting the output tensors from the model, we need to translate the density and RGB information for each sample to a single RGB value for each ray. We do this via the volume rendering equation shown below, which sums up the RGB values for each sample along the ray according to their corresponding density to get a single RBG value for the ray at the end. We vectorize this equation using <code class="language-plaintext highlighter-rouge">torch.cumsum</code> and other <code class="language-plaintext highlighter-rouge">torch</code> operatations and make it a part of the NeRF model. So our model actually returns a tensor of shape <code class="language-plaintext highlighter-rouge">(batch_size,3)</code> containing the predicted RGB values for each ray</p>
 
-<p>[Image placeholder removed]</p>
+<p><img src="https://i.postimg.cc/Fs33kPD4/volrend-eq.jpg" alt="NeRFs" /></p>
 
 <h3 id="results">Results</h3>
 
 <p>The PSNR curve on the validation set for the first 1000 training iterations and the predicted images for the first validation image on the iterations 1,50,100,200,500,1000 are shown below</p>
 
-<p>[Image placeholders removed]</p>
+<p><img src="https://i.postimg.cc/rydSMy4z/lego-psnr.jpg" alt="NeRFs" />
+<img src="https://i.postimg.cc/w38xdQm5/lego-ims.jpg" alt="NeRFs" /></p>
 
 <p>Running our trained model on the c2ws_test extrinsics provided allows us to produce 60 frames of the lego truck image rotating counterclockwise. We merge these frames to render a video</p>
+
+<p><img src="https://i.postimg.cc/hjX7DMfN/lego.gif" alt="NeRFs" /></p>
 
 <h3 id="bells--whistles">Bells &amp; Whistles</h3>
 
@@ -154,9 +151,13 @@
 
 <p>We also rendered a depths-map video by replacing the per-point color vector in the volume rendering equation with a scalar representing the depth of the point along the ray. Namely, the depths along the ray are represented by <code class="language-plaintext highlighter-rouge">linspace(1,0,64)</code>, 64 evenly spaced depths from 0 to 1, one for each point. This gives the depth-map video below:</p>
 
+<p><img src="https://i.postimg.cc/nLRDfNcv/lego-depth.gif" alt="NeRFs" /></p>
+
 <h4 id="color-rendered-video">Color-Rendered Video</h4>
 
 <p>Finally, we rendered a video of the lego truck with a different background color by calculating <code class="language-plaintext highlighter-rouge">1 - sum(T</code>~<code class="language-plaintext highlighter-rouge">i</code>~<code class="language-plaintext highlighter-rouge">*(1-exp(σ</code>~<code class="language-plaintext highlighter-rouge">i</code>~<code class="language-plaintext highlighter-rouge">δ</code>~<code class="language-plaintext highlighter-rouge">i</code>~<code class="language-plaintext highlighter-rouge">)))*color</code> for each ray, where color is a tensor of shape [3] containing the RGB value for the background color. We then add this to the tensor of colors that were rendered normally to get an image with the background color changed. Conceptually, this works because it is tantamount to adding the expected value that the ray is a background ray with color <code class="language-plaintext highlighter-rouge">color</code>, which is just the probability that the ray doesn’t terminate at any of the points multiplied by <code class="language-plaintext highlighter-rouge">color</code>. After making this change to the volume rendering equation, we can change the background color of the lego image as shown below:</p>
+
+<p><img src="https://i.postimg.cc/Ls617mR9/lego-color.gif" alt="NeRFs" /></p>
 
 <h2 id="conclusion">Conclusion</h2>
 

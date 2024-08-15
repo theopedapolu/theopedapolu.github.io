@@ -1,7 +1,7 @@
 ---
 name: Chess Engine
-tools: [TypeScript, Web Workers API, React]
+tools: [TypeScript/JavaScript, Web Workers API, React]
 image: https://i.postimg.cc/15HfwLhD/Chess-Engine.png
-description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+description: Basic chess engine written in JS that implements minimax with alpha-beta pruning to search the game tree for the best moves to play. Uses a custom evaluation function that supports piece placement, value, pawn structure, and king satefy.
 external_url: https://theopedapolu.com/Chess_Engine/
 ---

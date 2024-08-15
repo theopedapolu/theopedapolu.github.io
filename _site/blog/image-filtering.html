@@ -22,11 +22,11 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Experimenting with image filters and blending techniques">
-  <meta property="og:description" content="Beware the infinite loop of procrastination. TODO: Write a clever welcome message">
+  <meta property="og:description" content=""Good procrastination is avoiding errands to do real work" - Paul Graham. TODO: Write a clever welcome message">
   <meta property="og:image" content="https://i.postimg.cc/vTPwH7kx/profile.jpg">
 
   <title>Experimenting with image filters and blending techniques</title>
-  <meta name="description" content="Beware the infinite loop of procrastination. TODO: Write a clever welcome message">
+  <meta name="description" content=""Good procrastination is avoiding errands to do real work" - Paul Graham. TODO: Write a clever welcome message">
 
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
@@ -78,7 +78,7 @@
 
 <p class="post-metadata text-muted">
   28 October 2023 -  
-  <b>9 mins read time</b>
+  <b>6 mins read time</b>
 
   <br>Tags: 
     
@@ -96,7 +96,7 @@
 <p>In this project, we explore various use cases of filters/convolution and
 the frequency domain of images. Part 1 (and Part 2.1) explores various
 edge detection schemes using filters and Part 2 mainly uses the
-frequency domain of images to perform some interesting tasks</p>
+frequency domain of images to perform some interesting tasks.</p>
 
 <h2 id="part-1-filters">Part 1: Filters</h2>
 
@@ -113,34 +113,12 @@ convolution of the cameraman image with D_x, and cameraman_dy is the
 convolution with D_y. This uses the partial derivatives of the x and y
 directions to find the gradient magnitude for the image. As seen below,
 this creates a better edge detection overall that accounts for edges in
-all direction. Finally, to make the edge detection more clear, we
+all directions. Finally, to make the edge detection more clear, we
 binarize the gradient magnitude image by setting all pixels above 50 to
 255 and pixels at or below 50 to 0. We tested out different thresholds
 and found 50 worked well.</p>
 
-<p><img src="images/cameraman.png" alt="Cameraman Original Image" /></p>
-
-<p>Cameraman Original Image</p>
-
-<p><img src="images/cameraman_dx.jpg" alt="Cameraman_dx\
-Convolved with D_x filter" /></p>
-
-<p>Cameraman_dx<br />
-Convolved with D_x filter</p>
-
-<p><img src="images/cameraman_dy.jpg" alt="Cameraman_dy\
-Convolved with D_y filter" /></p>
-
-<p>Cameraman_dy<br />
-Convolved with D_y filter</p>
-
-<p><img src="images/cameraman_mag.jpg" alt="Cameraman Gradient Magnitude" /></p>
-
-<p>Cameraman Gradient Magnitude</p>
-
-<p><img src="images/cameraman_bin.jpg" alt="Cameraman Binarized" /></p>
-
-<p>Cameraman Binarized</p>
+<p><img src="https://i.postimg.cc/63JTf0yJ/im1.png" alt="Cameraman Original Image" /></p>
 
 <h3 id="12-derivative-of-gaussian-dog-filter">1.2 Derivative of Gaussian (DoG) Filter</h3>
 
@@ -148,38 +126,16 @@ Convolved with D_y filter</p>
 had jagged edges, as seen in the binarized image. To get smoother edge
 detection, we blur the original image by convolving it with a 2D
 gaussian kernel, then performing the same edge detection scheme with the
-finite difference operators</p>
+finite difference operators.</p>
 
-<p><img src="images/blurred_cameraman.jpg" alt="Blurred Cameraman Image" /></p>
-
-<p>Blurred Cameraman Image</p>
-
-<p><img src="images/cameraman_blurred_dx.jpg" alt="Blurred Cameraman_dx\
-Blurred image convolved with D_x filter" /></p>
-
-<p>Blurred Cameraman_dx<br />
-Blurred image convolved with D_x filter</p>
-
-<p><img src="images/cameraman_blurred_dy.jpg" alt="Blurred Cameraman_dy\
-Blurred image convolved with D_y filter" /></p>
-
-<p>Blurred Cameraman_dy<br />
-Blurred image convolved with D_y filter</p>
-
-<p><img src="images/cameraman_blurred_mag.jpg" alt="Blurred Cameraman Gradient Magnitude" /></p>
-
-<p>Blurred Cameraman Gradient Magnitude</p>
-
-<p><img src="images/cameraman_blurred_bin.jpg" alt="Blurred Cameraman Binarized" /></p>
-
-<p>Blurred Cameraman Binarized</p>
+<p><img src="https://i.postimg.cc/bNNrgdNJ/im2.png" alt="Cameraman Original Image" /></p>
 
 <p>As seen in the images above, there are clear differences between naively
 applying the finite difference filters (like in part 1.1) and blurring
 with a gaussian filter first then applying the finite difference
 filters. The edge-detected images from this part are much smoother than
 in the previous part, especially in the binarized images. The camerman
-no longer has jagged edges and instead has smooth, continous edges.
+no longer has jagged edges and instead has smooth, continuous edges.
 Furthermore, using the properties of convolution, we can combine the
 blurring and derivative filters into a single filter called the
 Derivative of Gaussian filter (DoG) which we only need to convolve once
@@ -187,37 +143,8 @@ with the cameraman image to perform smooth edge-detection. The results
 of applying the DoG filter are shown below; notice they are exactly the
 same as the images above.</p>
 
-<p><img src="images/DOG_dx.jpg" alt="DoG_dy filter\
-Gaussian convolved with Dx filter" /></p>
-
-<p>DoG_dy filter<br />
-Gaussian convolved with Dx filter</p>
-
-<p><img src="images/DOG_dy.jpg" alt="DoG_dy filter\
-Gaussian convolved with Dy filter" /></p>
-
-<p>DoG_dy filter<br />
-Gaussian convolved with Dy filter</p>
-
-<p><img src="images/cameraman_DOG_dx.jpg" alt="DoG Cameraman_dx\
-Convolved with DoG_dx filter" /></p>
-
-<p>DoG Cameraman_dx<br />
-Convolved with DoG_dx filter</p>
-
-<p><img src="images/cameraman_DOG_dy.jpg" alt="DoG Cameraman_dy\
-Convolved with DoG_dy filter" /></p>
-
-<p>DoG Cameraman_dy<br />
-Convolved with DoG_dy filter</p>
-
-<p><img src="images/cameraman_DOG_mag.jpg" alt="DoG Cameraman Gradient Magnitude" /></p>
-
-<p>DoG Cameraman Gradient Magnitude</p>
-
-<p><img src="images/cameraman_DOG_bin.jpg" alt="DoG Cameraman Binarized" /></p>
-
-<p>DoG Cameraman Binarized</p>
+<p><img src="https://i.postimg.cc/8cw5DgwN/im3.png" alt="Cameraman DoG Filter" />
+<img src="https://i.postimg.cc/qBc6Q9sm/im4.png" alt="Cameraman DoG Filter" /></p>
 
 <h2 id="part-2-frequencies">Part 2: Frequencies</h2>
 
@@ -230,157 +157,46 @@ frequencies) then subtracting the blurred image from the original image.
 This leaves only the high frequencies (mostly edges) which we then add
 back to the original image to obtain a sharpened image. We also use a
 parameter alpha which controls how much the image is sharpened.
-Mathmatically, sharpened_image(i,j) = alpha<em>original_image(i,j) +
+Mathematically, sharpened_image(i,j) = alpha<em>original_image(i,j) +
 (alpha-1)</em>blurred_image(i,j). Furthermore, we can combine the gaussian
 filter and subtraction into a single filter called the unsharp mask
 filter by computing alpha<em>e - (alpha-1)</em>gaussian_filter, where e is
 the unit impulse (a kernel with 1 in the middle and zeros elsewhere).
 The progression of sharpening some images is shown below.</p>
 
-<p><img src="images/taj.jpg" alt="Taj Mahal Original Image" /></p>
+<p><img src="https://i.postimg.cc/SKzJ95Qf/im5.png" alt="Sharpened Image" />
+<img src="https://i.postimg.cc/2SyqkyPJ/im6.png" alt="Sharpened Image" /></p>
 
-<p>Taj Mahal Original Image</p>
-
-<p><img src="images/blurred_taj.jpg" alt="Blurred Taj Mahal (low frequencies)" /></p>
-
-<p>Blurred Taj Mahal (low frequencies)</p>
-
-<p><img src="images/hi_freq_taj.jpg" alt="High frequencies Taj Mahal" /></p>
-
-<p>High frequencies Taj Mahal</p>
-
-<p><img src="images/sharpened_taj.jpg" alt="Sharpened Taj Mahal (alpha = 3)" /></p>
-
-<p>Sharpened Taj Mahal (alpha = 3)</p>
-
-<p><img src="images/angel.jpg" alt="Angel (my dog) Original Image" /></p>
-
-<p>Angel (my dog) Original Image</p>
-
-<p><img src="images/blurred_angel.jpg" alt="Blurred Angel (low frequencies)" /></p>
-
-<p>Blurred Angel (low frequencies)</p>
-
-<p><img src="images/hi_freq_angel.jpg" alt="High frequencies Angel" /></p>
-
-<p>High frequencies Angel</p>
-
-<p><img src="images/sharpened_angel.jpg" alt="Sharpened Angel (alpha = 3)" /></p>
-
-<p>Sharpened Angel (alpha = 3)</p>
-
-<p>For evalution purposes, we also blurred an image and tried to sharpen it
+<p>For evaluation purposes, we also blurred an image and tried to sharpen it
 again. The results are shown below:</p>
 
-<p><img src="images/lion.jpg" alt="Lion Original Image" /></p>
-
-<p>Lion Original Image</p>
-
-<p><img src="images/blurred_lion.jpg" alt="Blurred Lion" /></p>
-
-<p>Blurred Lion</p>
-
-<p><img src="images/double_blurred_lion.jpg" alt="Lion Double Blurred (low frequencies)" /></p>
-
-<p>Lion Double Blurred (low frequencies)</p>
-
-<p><img src="images/hi_freq_lion.jpg" alt="High frequencies Blurred Lion" /></p>
-
-<p>High frequencies Blurred Lion</p>
-
-<p><img src="images/sharpened_lion.jpg" alt="Sharpened Lion (alpha = 3)" /></p>
-
-<p>Sharpened Lion (alpha = 3)</p>
-
-<p>Notice that the sharpened version of the blurred image is a little
-better but still far from the original image. This is because the image
-is sharpened along the edges but the rest of the blurry areas remain
-blurry so we cannot get back the original image</p>
+<p><img src="https://i.postimg.cc/RVM6YXGv/im7.png" alt="Sharpened Image" />
+<img src="https://i.postimg.cc/d1YtyVxJ/im8.png" alt="Sharpened Image" /></p>
 
 <h3 id="22-hybrid-images">2.2 Hybrid Images</h3>
 
 <p>To create hybrid images, we combined the low frequencies from one image
 with the high frequencies from another. In particular, to compute the
-low frequecies for image A, we convolved image A with a gaussian kernel
-to blur it. To compute the high frequecies for image B, we computed the
-low frequecies using a gaussian kernel and subtracted it from the
+low frequencies for image A, we convolved image A with a gaussian kernel
+to blur it. To compute the high frequencies for image B, we computed the
+low frequencies using a gaussian kernel and subtracted it from the
 original image. Then we averaged the low frequency image A with the high
 frequency image B to get the hybrid image. We had to experiment with the
 kernel sizes and the sigmas (cutoff frequencies) for each gaussian
-filter to get the most aesthetically pleasing result</p>
+filter to get the most aesthetically pleasing result.</p>
 
-<p><img src="images/DerekPicture.jpg" alt="Derek Picture" /></p>
+<p><img src="https://i.postimg.cc/7hBxdMYL/im9.png" alt="Hybrid Image" />
+<img src="https://i.postimg.cc/0yhN9fGM/im10.png" alt="Hybrid Image" />
+<img src="https://i.postimg.cc/1z63XqMW/im11.png" alt="Hybrid Image" /></p>
 
-<p>Derek Picture</p>
+<p>Here are the FFT plots for the Tigrence hybrid image:</p>
 
-<p><img src="images/nutmeg.jpg" alt="Nutmeg" /></p>
-
-<p>Nutmeg</p>
-
-<p><img src="images/dutmeg.jpg" alt="Dutmeg (Derek + Nutmeg)" /></p>
-
-<p>Dutmeg (Derek + Nutmeg)</p>
-
-<p><img src="images/zebra.jpg" alt="Zebra" /></p>
-
-<p>Zebra</p>
-
-<p><img src="images/cow.jpg" alt="Cow" /></p>
-
-<p>Cow</p>
-
-<p><img src="images/hybrid_cowra.jpg" alt="Cowra (Zebra + Cow)" /></p>
-
-<p>Cowra (Zebra + Cow)</p>
-
-<p><img src="images/lawrence.jpg" alt="Trevor Lawrence" /></p>
-
-<p>Trevor Lawrence</p>
-
-<p><img src="images/tiger.jpg" alt="Tiger" /></p>
-
-<p>Tiger</p>
-
-<p><img src="images/hybrid_tigrence.jpg" alt="Tigrence (Trevor Lawrence + Tiger)" /></p>
-
-<p>Tigrence (Trevor Lawrence + Tiger)</p>
-
-<p>Here are the FFT plots for the Tigrence hybrid image</p>
-
-<p><img src="images/ff_tiger.jpg" alt="FFT Tiger" /></p>
-
-<p>FFT Tiger</p>
-
-<p><img src="images/fft_lawrence.jpg" alt="FFT Lawrence" /></p>
-
-<p>FFT Lawrence</p>
-
-<p><img src="images/fft_low.jpg" alt="FFT Lawrence low pass filter" /></p>
-
-<p>FFT Lawrence low pass filter</p>
-
-<p><img src="images/fft_high.jpg" alt="FFT Tiger high pass filter" /></p>
-
-<p>FFT Tiger high pass filter</p>
-
-<p><img src="images/fft_tigrence.jpg" alt="FFT Tigrence Hybrid" /></p>
-
-<p>FFT Tigrence Hybrid</p>
+<p><img src="https://i.postimg.cc/NfJMzY5x/im12.png" alt="FFT Tigrence Hybrid" /></p>
 
 <p>Here is an example of a failed hybrid image, a school bus and a giraffe.
-The school bus is too short for the giraffe so the output looks strange</p>
+The school bus is too short for the giraffe so the output looks strange:</p>
 
-<p><img src="images/bus.jpg" alt="School Bus" /></p>
-
-<p>School Bus</p>
-
-<p><img src="images/giraffe.jpg" alt="Giraffe" /></p>
-
-<p>Giraffe</p>
-
-<p><img src="images/hybrid_biraffe.jpg" alt="Biraffe (Bus + Giraffe)" /></p>
-
-<p>Biraffe (Bus + Giraffe)</p>
+<p><img src="https://i.postimg.cc/0yzQg3S1/im13.png" alt="Failed Hybrid Image" /></p>
 
 <h3 id="23-gaussian-and-laplacian-stacks">2.3 Gaussian and Laplacian Stacks</h3>
 
@@ -398,104 +214,24 @@ gaussian_mask(i,j)<em>laplacian_apple(i,j) +
 weight the laplacians of both images by the gaussian of the mask at each
 level. To get the output image, we collapse the output laplacian stack
 by summing across all the levels. The result is a smoothly blended
-oraple</p>
+oraple.</p>
 
-<p><img src="images/apple.jpeg" alt="Apple" /></p>
-
-<p>Apple</p>
-
-<p><img src="images/orange.jpeg" alt="Orange" /></p>
-
-<p>Orange</p>
-
-<p><img src="images/oraple_mask.jpg" alt="Oraple Mask" /></p>
-
-<p>Oraple Mask</p>
-
-<p><img src="images/oraple.jpg" alt="Oraple" /></p>
-
-<p>Oraple</p>
-
-<p><img src="images/lp_apple0.jpg" alt="Weighted Laplacian Apple (level = 0)" /></p>
-
-<p>Weighted Laplacian Apple (level = 0)</p>
-
-<p><img src="images/lp_apple1.jpg" alt="Weighted Laplacian Apple (level = 1)" /></p>
-
-<p>Weighted Laplacian Apple (level = 1)</p>
-
-<p><img src="images/lp_apple2.jpg" alt="Weighted Laplacian Apple (level = 2)" /></p>
-
-<p>Weighted Laplacian Apple (level = 2)</p>
-
-<p><img src="images/lp_apple3.jpg" alt="Weighted Laplacian Apple (level = 3)" /></p>
-
-<p>Weighted Laplacian Apple (level = 3)</p>
-
-<p><img src="images/lp_apple4.jpg" alt="Weighted Laplacian Apple (level = 4)" /></p>
-
-<p>Weighted Laplacian Apple (level = 4)</p>
-
-<p><img src="images/lp_apple5.jpg" alt="Weighted Laplacian Apple (level = 5)" /></p>
-
-<p>Weighted Laplacian Apple (level = 5)</p>
-
-<p><img src="images/lp_oraple0.jpg" alt="Weighted Laplacian Oraple (level = 0)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 0)</p>
-
-<p><img src="images/lp_oraple1.jpg" alt="Weighted Laplacian Oraple (level = 1)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 1)</p>
-
-<p><img src="images/lp_oraple2.jpg" alt="Weighted Laplacian Oraple (level = 2)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 2)</p>
-
-<p><img src="images/lp_oraple3.jpg" alt="Weighted Laplacian Oraple (level = 3)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 3)</p>
-
-<p><img src="images/lp_oraple4.jpg" alt="Weighted Laplacian Oraple (level = 4)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 4)</p>
-
-<p><img src="images/lp_oraple5.jpg" alt="Weighted Laplacian Oraple (level = 5)" /></p>
-
-<p>Weighted Laplacian Oraple (level = 5)</p>
-
-<p><img src="images/lp_orange0.jpg" alt="Weighted Laplacian Orange (level = 0)" /></p>
-
-<p>Weighted Laplacian Orange (level = 0)</p>
-
-<p><img src="images/lp_orange1.jpg" alt="Weighted Laplacian Orange (level = 1)" /></p>
-
-<p>Weighted Laplacian Orange (level = 1)</p>
-
-<p><img src="images/lp_orange2.jpg" alt="Weighted Laplacian Orange (level = 2)" /></p>
-
-<p>Weighted Laplacian Orange (level = 2)</p>
-
-<p><img src="images/lp_orange3.jpg" alt="Weighted Laplacian Orange (level = 3)" /></p>
-
-<p>Weighted Laplacian Orange (level = 3)</p>
-
-<p><img src="images/lp_orange4.jpg" alt="Weighted Laplacian Orange (level = 4)" /></p>
-
-<p>Weighted Laplacian Orange (level = 4)</p>
-
-<p><img src="images/lp_orange5.jpg" alt="Weighted Laplacian Orange (level = 5)" /></p>
-
-<p>Weighted Laplacian Orange (level = 5)</p>
+<p><img src="https://i.postimg.cc/NMkG7v3m/im14.png" alt="Gaussian and Laplacian Stacks" />
+<img src="https://i.postimg.cc/zvDzxPNM/im15.png" alt="Gaussian and Laplacian Stacks" />
+<img src="https://i.postimg.cc/5N09vGnQ/im16.png" alt="Gaussian and Laplacian Stacks" />
+<img src="https://i.postimg.cc/XNx7r3c0/im17.png" alt="Gaussian and Laplacian Stacks" /></p>
 
 <h3 id="24-multiresolution-blending">2.4 Multiresolution Blending</h3>
 
-<p>We also selected our own images to blend and used irregular masks during
-the blending process. We followed the same procedure for blending as
-outlined in the previous section for the oraple, except now with
-irregular masks. For example, here is the blending process of an image
-of Toothless (the dragon from “How to Train your Dragon”) and an image
-of SF’s Golden Gate Bridge</p>
+<p>We also selected our own images to blend and used irregular masks during the blending process. We followed the same procedure for blending as outlined in the previous section for the oraple, except now with irregular masks. For example, here is the blending process of an image of Toothless (the dragon from “How to Train your Dragon”) and an image of SF’s Golden Gate Bridge:</p>
+
+<p><img src="https://i.postimg.cc/nc0jfBwB/im18.png" alt="Multiresolution Blending" />
+<img src="https://i.postimg.cc/k4QG1bbV/im19.png" alt="Multiresolution Blending" /></p>
+
+<p>Here is the blending process of an image of Bill Gates walking and an image of Sather Gate at UC Berkeley. The blended image shows Bill walking in Sather Gate:</p>
+
+<p><img src="https://i.postimg.cc/zDk3TTN6/im20.png" alt="Multiresolution Blending" />
+<img src="https://i.postimg.cc/zvqB9GCx/im21.png" alt="Multiresolution Blending" /></p>
 
 
 

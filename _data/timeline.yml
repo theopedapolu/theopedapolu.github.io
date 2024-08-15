@@ -1,20 +1,12 @@
 - title: Student, SC Governor's School for Science & Math
   from: 2018
   to: 2020
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-               reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-- title: Student, UC Berkeley CS & Math
+  description: I went to a public boarding school for 11th/12th grade students in South Carolina that specialized in math & science.
+- title: Undergraduate, UC Berkeley CS & Math
   from: 2020
   to: 2023
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-               reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  description: Coursework included
+  
 
 - title: Software QA Engineer, Scale AI
   from: 2024

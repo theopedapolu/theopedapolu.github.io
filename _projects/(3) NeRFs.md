@@ -2,7 +2,9 @@
 name: NeRFs (Neural Radiance Fields)
 tools: [PyTorch, OpenCV, Scikit-Image]
 image: https://i.postimg.cc/gk51S0Wp/nerf.jpg
-description: This project has no image or showcase page, but it is still a beautiful project inside out!
+description: Deep neural network trained to model 3D spaces using Neural Radiance Fields (NeRFs). Implements a pipeline that converts multi-view image data into rays and maps them to RGB values and densities. Optimized for accurate 2D image rendering from novel viewpoints, focusing on generalization across perspectives.
+
+
 ---
 ## Background
 

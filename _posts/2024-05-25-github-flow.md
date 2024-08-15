@@ -1,9 +1,9 @@
 ---
-title: Catch-22
+title: Catch-22 Book Review
 tags: [Books, Philosophy]
 style: fill
 color: primary
-description: GitHub Flow is a lightweight, branch-based workflow that supports teams and projects where deployments are made regularly. This guide explains how and why GitHub Flow works.
+description: I just finished Catch-22 by Joseph Heller, and it’s now one of my all-time favorites. The book blends sharp humor with a deep critique of bureaucracy, making it both hilarious and thought-provoking. Check out my review to see why this satirical war novel struck such a chord with me.
 ---
 ## My Review of Catch-22 by Joseph Heller
 

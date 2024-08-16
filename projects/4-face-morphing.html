@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by yousinix
+  Free for personal and commercial use under the MIT license
+  https://github.com/yousinix/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Face Morphing">
+  <meta property="og:description" content="Explored facial morphing by blending my face with Magnus Carlsen’s and creating a mean face from a Danish dataset. I also produced caricatures and transforme...">
+  <meta property="og:image" content="https://i.postimg.cc/3NrHTfSH/theo-woman.jpg">
+
+  <title>Face Morphing</title>
+  <meta name="description" content="Explored facial morphing by blending my face with Magnus Carlsen’s and creating a mean face from a Danish dataset. I also produced caricatures and transforme...">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Theophilus Pedapolu</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h2 id="background">Background</h2>
+
+<p>In this project, I explore various applications of morphing. I morph my face into the face of Magnus Carlen, the world chess champion. Then, I use a dataset of Danish faces and compute the average face of the population, morphing the average into my face and vice versa. Finally, I use morphing to change the gender of my face for the bells &amp; whistles portion.</p>
+
+<h2 id="part-1-defining-correspondences">Part 1: Defining Correspondences</h2>
+
+<p>In order to morph my face into Magnus’s, I first defined correspondence points between the two images using this tool: <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa22/upload/files/proj3/cs194-26-aex/tool.html">Correspondence Points Tool</a>. Then, I created a triangular mesh for the two images using Delaunay triangulation, which ensured that the triangles were not too skinny. The triangulation was constructed on the average of the two correspondence points sets to avoid triangle deformation</p>
+
+<p><img src="https://i.postimg.cc/vZ8QMK6Z/fm1.png" alt="Face Morphing" /></p>
+
+<h2 id="part-2-computing-the-mid-way-face">Part 2: Computing the “Mid-way Face”</h2>
+
+<p>To get an idea of how to construct a sequence that morphs my face into Magnus’s, I computed the mid-way face first, which is the average combination of my face with Magnus’s. This is the face that should appear in the middle of the morphing sequence. From the previous part, I had the average shape (i.e. the average of the two correspondence points sets). To construct the midway face, I first warped my face into the average shape and Magnus’s face into the average shape. Then, I cross-dissolved the two warped images by averaging the pixel values between them. For the warping procedure, we want to warp each triangle in the source shape to its corresponding triangle in the target shape, so for each pair of corresponding triangles, we find the inverse affine transformation matrix that maps the target triangle to the source triangle. Then, to find the color of each pixel inside the target triangle, we apply this inverse affine transformation to find its location in the source triangle and interpolate among the source pixels to find the color of the target pixel. I used nearest neighbor interpolation because it ran the fastest and produced good results.</p>
+
+<p><img src="https://i.postimg.cc/bNhyVryb/fm2.png" alt="Face Morphing" />
+<img src="https://i.postimg.cc/xjHjPM2n/fm3.png" alt="Face Morphing" /></p>
+
+<h2 id="part-3-the-morph-sequence">Part 3: The Morph Sequence</h2>
+
+<p>Now that we have an idea of how to morph between the two faces, to produce a gradual sequence that morphs between my face and Magnus’s, we simply need to vary the parameters of the morph and apply the same procedure we used in Part 2. Namely, the 2 parameters we’re concerned with are warp_frac (controls how much of my face shape is warped into Magnus’s face shape) and dissolve_frac (controls how much my face colors are changed into Magnus’s face colors). For the midway face, both of these parameters were 0.5 because we wanted an equal contribution from both faces. To produce a morph sequence, we vary these parameters from 0 to 1 and create 50 frames of gradual morphing from my face to Magnus’s. For each frame, I compute the shape to warp to as (1-warp_frac)*theo_pts + warp_frac*magnus_pts and warp both faces to this shape. Then, I cross-dissolve by computing a weighted average of the pixel values of these warped images, i.e. (1-dissolve_frac)*warped_theo + dissolve_frac*warped_magnus. The morph sequence can be seen as a GIF below</p>
+
+<p><img src="https://i.postimg.cc/fTfwGsyP/fm2.png" alt="Face Morphing" /></p>
+
+<h2 id="part-4-the-mean-face-of-a-population">Part 4: The “Mean Face” of a Population</h2>
+
+<p>I also computed the mean face of a subset of the <a href="https://web.archive.org/web/20210305094647/http://www2.imm.dtu.dk/~aam/datasets/datasets.html">Danes</a> dataset by first finding the average face shape (averaging the face vectors), warping each image to the average shape, and finally averaging the pixels of these warped images. The subset I used was the frontal face, neutral expession subset. I used the annotated face shapes provided in the dataset but added additional points to each shape corresponding to the corners of each image. The average face can be seen below. Since most of the dataset contained male faces, it makes sense that the average face also looks male.</p>
+
+<p><img src="https://i.postimg.cc/fTfwGsyP/fm4.png" alt="Face Morphing" /></p>
+
+<p>Here are the faces of the population morphed to the average shape with some specific examples</p>
+
+<p><img src="https://i.postimg.cc/MpszGYyb/fm5.png" alt="Face Morphing" />
+<img src="https://i.postimg.cc/MGNx7K3n/fm6.png" alt="Face Morphing" /></p>
+
+<p>I took another picture of my face to match the pattern in the Danes dataset, full frontal and neutral expression. Then, I morphed my face into the average Danes shape and the average Danes face into my face shape, the results of which can be seen below</p>
+
+<p><img src="https://i.postimg.cc/0NbPKJng/fm7.png" alt="Face Morphing" /></p>
+
+<h2 id="part-5-caricatures---extrapolating-from-the-mean">Part 5: Caricatures - Extrapolating from the Mean</h2>
+
+<p>To produce a caricature of myself, I extrapolated from the population mean found in the previous part. If <strong>a</strong> is the shape vector for the average face of the Danes and <strong>b</strong> is the shape vector for my face, then <strong>b-a</strong> represents what makes my shape different from the averge Danes shape. So, we can add <strong>alpha(b-a)</strong> (where alpha is a positive constant) to my face shape to get an extrapolated face shape. Warping my face to this shape then produces a caricature of myself</p>
+
+<p><img src="https://i.postimg.cc/50Q4TFQ5/fm8.png" alt="Face Morphing" /></p>
+
+<h2 id="bells--whistles">Bells &amp; Whistles</h2>
+
+<p>I changed the gender of my face my morphing with the face of an average European woman (image found <a href="https://learnopencv.com/average-face-opencv-c-python-tutorial/">here</a>). After defining correspondence points between the two faces, I warped just my face shape to the woman’s face shape. Then, I morphed my appearance to the woman’s appearance by first warping the woman’s face shape to mine and cross-dissolving the colors. Finally, I morphed both the shape and the appearance of my face to the woman’s by morphing with warp_frac = 0.75 and dissolve_frac = 0.5</p>
+
+<p><img src="https://i.postimg.cc/zvnJXZjV/fm9.png" alt="Face Morphing" />
+<img src="https://i.postimg.cc/8c8pSPL2/fm10.png" alt="Face Morphing" /></p>
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+    <small class="text-muted mb-2">
+      <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+      by <strong>Theophilus Pedapolu</strong>
+    </small>
+  
+    <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:theopedapolu@gmail.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/theopedapolu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/theopedapolu/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.twitter.com/TPedapolu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#1da1f2'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-twitter fa-1x"></i>
+    </a>
+
+</div>
+  
+  </footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

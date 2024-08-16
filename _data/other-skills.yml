@@ -1,7 +1,0 @@
-- name: Piano (Church Band)
-  percentage: 88
-  color: info
-
-- name: Guitar (working on it)
-  percentage: 45
-  color: success

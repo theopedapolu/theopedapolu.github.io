@@ -4,7 +4,7 @@
       "title"    : "Catch-22 Book Review",
       "category" : "",
       "tags"     : "Books, Philosophy",
-      "url"      : "/Users/theopedapolu/theopedapolu.github.io/_site/blog/github-flow",
+      "url"      : "/blog/github-flow",
       "date"     : "2024-05-25 00:00:00 -0400"
     } ,
   
@@ -12,7 +12,7 @@
       "title"    : "Experimenting with image filters and blending techniques",
       "category" : "",
       "tags"     : "Photography, Image Processing",
-      "url"      : "/Users/theopedapolu/theopedapolu.github.io/_site/blog/image-filtering",
+      "url"      : "/blog/image-filtering",
       "date"     : "2023-10-28 00:00:00 -0400"
     } ,
   
@@ -20,7 +20,7 @@
       "title"    : "Colorizing the Prokudin-Gorski Image Collection",
       "category" : "",
       "tags"     : "Computation, Photography",
-      "url"      : "/Users/theopedapolu/theopedapolu.github.io/_site/blog/prokudin-gorskii",
+      "url"      : "/blog/prokudin-gorskii",
       "date"     : "2023-09-15 00:00:00 -0400"
     } 
   

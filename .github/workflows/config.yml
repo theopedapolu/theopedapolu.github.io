@@ -3,7 +3,7 @@ name: Build and Deploy Jekyll Site
 on:
   push:
     branches:
-      - develop
+      - development
 
 jobs:
   build-and-deploy:
@@ -12,12 +12,12 @@ jobs:
       - name: Checkout develop branch
         uses: actions/checkout@v4
         with:
-          ref: develop
+          ref: development
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.1'
           bundler-cache: true
 
       - name: Build Jekyll site
@@ -29,7 +29,7 @@ jobs:
           git config --global user.email 'theopedapolu@gmail.com'
           git checkout gh-pages
           git rm -rf --ignore-unmatch * */.
-          git checkout develop -- _site
+          git checkout development -- _site
           mv _site/* .
           rm -rf _site
           git add .

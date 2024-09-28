@@ -1,0 +1,42 @@
+name: Build and Deploy Jekyll Site
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout develop branch
+        uses: actions/checkout@v4
+        with:
+          ref: development
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+
+      - name: Deploy to build branch
+        run: |
+          git config --global user.name 'theopedapolu'
+          git config --global user.email 'theopedapolu@gmail.com'
+          git checkout gh-pages
+          git rm -rf --ignore-unmatch * */.
+          git checkout development -- _site
+          mv _site/* .
+          rm -rf _site
+          git add .
+          git commit -m "Deploy Jekyll site to build branch"
+          git push -f origin gh-pages
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

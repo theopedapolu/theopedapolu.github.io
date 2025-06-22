@@ -1,35 +1,34 @@
 - name: HTML5/CSS3
+  percentage: 97
+  color: danger
+
+- name: Apex
+  percentage: 97
+  color: success
+
+- name: Salesforce Omnistudio
   percentage: 95
+  color: info 
+
+- name: SQL
+  percentage: 95
+  color: success
+
+- name: Salesforce Lightning Web Components
+  percentage: 92
   color: danger
 
 - name: Python
-  percentage: 90
+  percentage: 92
   color: primary
 
-- name: SQL
-  percentage: 87
-  color: success
+- name: JavaScript/TypeScript (React, Node.js)
+  percentage: 90
+  color: warning
 
 - name: Java
   percentage: 85
   color: dark
-
-- name: C/C++
-  percentage: 85
-  color: info
-
-- name: JavaScript (React, Node.js)
-  percentage: 85
-  color: warning
-
-- name: TypeScript (React)
-  percentage: 82
-  color: primary
-
-
-- name: Go
-  percentage: 75
-  color: danger
 
 - name: Swift
   percentage: 75
